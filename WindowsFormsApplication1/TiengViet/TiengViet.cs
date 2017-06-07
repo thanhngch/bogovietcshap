@@ -235,7 +235,7 @@ namespace BoGoViet.TiengViet
                     phuAmCuoi.Add(new MyKey(e.KeyCode, isUpperCase()));
                 }
             }
-
+            
             // prevent send key
             if (doubleCuoiCau != Keys.None || dauCuoiCau != Keys.None || vekepPress == true)
             {
@@ -253,7 +253,41 @@ namespace BoGoViet.TiengViet
 
         private void Run(ref KeyEventArgs e)
         {
-
+            int numberKeysPhuAmCuoiCau = phuAmCuoi.Count;
+            int backIndex = 0;
+            
+            //  Fix for thuơ, huơ
+            if (phuAmCuoi.Count > 0 && nguyenAmGiuaBienDoi.ToString() == "uơ")
+            {
+                if (pressLeftShift)
+                {
+                    sim.Keyboard.KeyUp(VirtualKeyCode.LSHIFT);
+                }
+                if (pressRightShift)
+                {
+                    sim.Keyboard.KeyUp(VirtualKeyCode.RSHIFT);
+                }
+                for (int i = 0; i < numberKeysPhuAmCuoiCau; i++)
+                {
+                    sim.Keyboard.KeyPress(VirtualKeyCode.LEFT);
+                }
+                sim.Keyboard.KeyPress(VirtualKeyCode.BACK);
+                SendText("ư");
+                nguyenAmGiuaBienDoi = new StringBuilder("ươ");
+                for (int i = 0; i < numberKeysPhuAmCuoiCau; i++)
+                {
+                    sim.Keyboard.KeyPress(VirtualKeyCode.RIGHT);
+                }
+                if (pressLeftShift)
+                {
+                    sim.Keyboard.KeyDown(VirtualKeyCode.LSHIFT);
+                }
+                if (pressRightShift)
+                {
+                    sim.Keyboard.KeyDown(VirtualKeyCode.RSHIFT);
+                }
+            }
+            
             bool printCurrentPressKey = false;
             if (doubleCuoiCau == Keys.None && dauCuoiCau == Keys.None && vekepPress == false
                 && PrintWW == false && dauPhuAm == Keys.None)
@@ -292,12 +326,11 @@ namespace BoGoViet.TiengViet
             {
                 e.Handled = true;
             }
-
             
+
             //m_Events.KeyPress -= HookManager_KeyPress;
 
-            int numberKeysPhuAmCuoiCau = phuAmCuoi.Count;
-            int backIndex = 0;
+            
             if (pressLeftShift)
             {
                 sim.Keyboard.KeyUp(VirtualKeyCode.LSHIFT);
@@ -310,7 +343,7 @@ namespace BoGoViet.TiengViet
             {
                 sim.Keyboard.KeyPress(VirtualKeyCode.LEFT);
             }
-
+            
             if (doubleCuoiCau != Keys.None)
             {
 
@@ -580,6 +613,11 @@ namespace BoGoViet.TiengViet
             if (cVeKep.ContainsKey(nguyenAmGiuaBienDoiString))
             {
                 textSend = cVeKep[nguyenAmGiuaBienDoiString];
+                // Fix for huơ, thuở
+                if (phuAmCuoi.Count == 0 && nguyenAmGiuaBienDoiString == "uo")
+                {
+                    textSend = "uơ";
+                }
                 nguyenAmGiuaBienDoi = new StringBuilder(textSend);
                 return true;
             }
