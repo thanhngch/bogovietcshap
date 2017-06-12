@@ -152,6 +152,7 @@ namespace BoGoViet.TiengViet
             cVekepOU["uo"] = "ươ"; // maybe uơ, eg: thuở, huơ
             cVekepOU["uô"] = "ươ";
             cVekepOU["ưo"] = "ươ";
+            cVekepOU["uơ"] = "ươ";
             cVekepOU["uu"] = "ưu";
             cVekepOU["uoi"] = "ươi";
             cVekepOU["uôi"] = "ươi";
@@ -204,15 +205,17 @@ namespace BoGoViet.TiengViet
                 cDauNguyenAm[nguyenAm1[i]] = 0;
             }
 
-            string[] nguyenAm2 = new string[] { "iê", "yê", "oă", "uă", "uâ", "uê", "uô",
-                "uơ", "ươ", "iêu", "yêu",
-                "oai", "oao", "oeo", "uao", "uây", "uôi", "ươi", "ươu", "uya", "uyu",
+            string[] nguyenAm2 = new string[] { "ie", "iê", "ye", "yê", "oă", "uă", "uâ", "ue", "uê", "uô",
+                "uơ", "ươ", "ieu", "iêu", "yeu", "yêu",
+                "oai", "oao", "oeo", "uao", "uay", "uây", "uoi", "uôi", "uoi", "ươi",
+                "uou", "ươu", "uya", "uyu",
                 // "iua", "iưa" // fix for gi
             };
             for (var i = 0; i < nguyenAm2.Length; i++)
             {
                 cDauNguyenAm[nguyenAm2[i]] = 1;
             }
+            cDauNguyenAm["uye"] = 2;
             cDauNguyenAm["uyê"] = 2;
         }
 
@@ -435,6 +438,10 @@ namespace BoGoViet.TiengViet
                 return true;
             }
             return false;
+        }
+        public bool IsDauMoc(Keys keycode)
+        {
+            return this.IsVNIDauMocO(keycode) || this.IsVNIDauMocA(keycode) || this.IsTelexDauMoc(keycode);
         }
 
         public bool CheckKeyEndWord(Keys key)

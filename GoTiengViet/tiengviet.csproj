@@ -15,7 +15,7 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
-    <PublishUrl>E:\hook\public2\</PublishUrl>
+    <PublishUrl>E:\bo go\public_gotv\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
@@ -25,14 +25,14 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>false</MapFileExtensions>
-    <UpdateUrl>https://bogoviet.kauthara.org/update/</UpdateUrl>
+    <UpdateUrl>https://bogoviet.com/update/</UpdateUrl>
     <TargetCulture>vi-VN</TargetCulture>
     <ProductName>Bộ Gõ Việt</ProductName>
     <PublisherName>Nguyen Chi Thanh</PublisherName>
     <SuiteName>Thanh</SuiteName>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>12</ApplicationRevision>
-    <ApplicationVersion>0.1.8.%2a</ApplicationVersion>
+    <ApplicationRevision>8</ApplicationRevision>
+    <ApplicationVersion>0.1.9.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -160,10 +160,12 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="english.ico" />
     <Content Include="Gma.System.MouseKeyHook.dll" />
+    <Content Include="icon\english.ico" />
+    <Content Include="icon\english2.ico" />
+    <Content Include="icon\vietnam.ico" />
+    <Content Include="icon\vietnam2.ico" />
     <Content Include="logo.ico" />
-    <Content Include="vietnam.ico" />
     <Content Include="WindowsInput.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

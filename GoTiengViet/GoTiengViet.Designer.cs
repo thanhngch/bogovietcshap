@@ -1,6 +1,6 @@
-﻿namespace WindowsFormsApplication1
+﻿namespace GotiengVietApplication
 {
-    partial class Form1
+    partial class GotiengVietForm
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GotiengVietForm));
             this.labelChuyenKieuGo = new System.Windows.Forms.Label();
             this.bogoviet = new System.Windows.Forms.NotifyIcon(this.components);
             this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -38,7 +38,7 @@
             this.thoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.chkStartUp = new System.Windows.Forms.CheckBox();
             this.selectTypeInput = new System.Windows.Forms.ComboBox();
-            this.buttonGioiThieu = new System.Windows.Forms.Button();
+            this.buttonDong = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.contextMenuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -76,6 +76,7 @@
             this.giớiThiệuToolStripMenuItem1.Name = "giớiThiệuToolStripMenuItem1";
             this.giớiThiệuToolStripMenuItem1.Size = new System.Drawing.Size(242, 36);
             this.giớiThiệuToolStripMenuItem1.Text = "Giới thiệu";
+            this.giớiThiệuToolStripMenuItem1.Click += new System.EventHandler(this.giớiThiệuToolStripMenuItem1_Click);
             // 
             // giớiThiệuToolStripMenuItem
             // 
@@ -83,6 +84,7 @@
             this.giớiThiệuToolStripMenuItem.Name = "giớiThiệuToolStripMenuItem";
             this.giớiThiệuToolStripMenuItem.Size = new System.Drawing.Size(242, 36);
             this.giớiThiệuToolStripMenuItem.Text = "Chương trình";
+            this.giớiThiệuToolStripMenuItem.Click += new System.EventHandler(this.giớiThiệuToolStripMenuItem_Click);
             // 
             // thoToolStripMenuItem
             // 
@@ -118,15 +120,15 @@
             this.selectTypeInput.TabIndex = 8;
             this.selectTypeInput.SelectedIndexChanged += new System.EventHandler(this.selectTypeInput_SelectedIndexChanged);
             // 
-            // buttonGioiThieu
+            // buttonDong
             // 
-            this.buttonGioiThieu.Location = new System.Drawing.Point(156, 312);
-            this.buttonGioiThieu.Name = "buttonGioiThieu";
-            this.buttonGioiThieu.Size = new System.Drawing.Size(177, 53);
-            this.buttonGioiThieu.TabIndex = 9;
-            this.buttonGioiThieu.Text = "Giới thiệu";
-            this.buttonGioiThieu.UseVisualStyleBackColor = true;
-            this.buttonGioiThieu.Click += new System.EventHandler(this.buttonGioiThieu_Click);
+            this.buttonDong.Location = new System.Drawing.Point(156, 312);
+            this.buttonDong.Name = "buttonDong";
+            this.buttonDong.Size = new System.Drawing.Size(177, 53);
+            this.buttonDong.TabIndex = 9;
+            this.buttonDong.Text = "Đóng";
+            this.buttonDong.UseVisualStyleBackColor = true;
+            this.buttonDong.Click += new System.EventHandler(this.buttonDong_Click);
             // 
             // label1
             // 
@@ -137,21 +139,22 @@
             this.label1.TabIndex = 11;
             this.label1.Text = "Kiểu gõ";
             // 
-            // Form1
+            // GotiengVietForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(484, 395);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.buttonGioiThieu);
+            this.Controls.Add(this.buttonDong);
             this.Controls.Add(this.selectTypeInput);
             this.Controls.Add(this.chkStartUp);
             this.Controls.Add(this.labelChuyenKieuGo);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.Name = "Form1";
+            this.Name = "GotiengVietForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Bộ Gõ Việt";
+            this.Load += new System.EventHandler(this.GotiengVietForm_Load);
             this.Move += new System.EventHandler(this.Form1_Move);
             this.contextMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -165,7 +168,7 @@
         private System.Windows.Forms.NotifyIcon bogoviet;
         private System.Windows.Forms.CheckBox chkStartUp;
         private System.Windows.Forms.ComboBox selectTypeInput;
-        private System.Windows.Forms.Button buttonGioiThieu;
+        private System.Windows.Forms.Button buttonDong;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem thoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem giớiThiệuToolStripMenuItem;

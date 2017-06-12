@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 using Gma.System.MouseKeyHook;
@@ -9,27 +8,28 @@ using System.Media;
 using Microsoft.Win32;
 using BoGoViet.TiengViet;
 using WindowsInput;
-using WindowsInput.Native;
 using BoGoViet;
 using System.Diagnostics;
+using System.Reflection;
+using System.IO;
+using System.Threading;
 
-namespace WindowsFormsApplication1
+namespace GotiengVietApplication
 {
 
-    public partial class Form1 : Form
+    public partial class GotiengVietForm : Form
     {
         private IKeyboardMouseEvents m_Events;
-        
         // che do go tieng anh
         private bool goEnglish = false;
         private RegistryKey rk;
         private TiengViet tv = new TiengViet();
         private bool isAltPress = false;
         private InputSimulator sim;
-        // private bool pressLeftShift = false;
-        // private bool canGoTiengViet = true;
-
-        public Form1()
+        About about = null;
+        private string vietIcon = "icon/vietnam.ico";
+        private string engIcon = "icon/english.ico";
+        public GotiengVietForm()
         {
             InitializeComponent();
             this.selectTypeInput.SelectedItem = "Telex";
@@ -43,6 +43,14 @@ namespace WindowsFormsApplication1
 
             sim = new InputSimulator();
             Application.ApplicationExit += new EventHandler(this.OnApplicationExit);
+            MinimizeBox = false;
+            if (IsWindows7AndBelow())
+            {
+                vietIcon = "icon/vietnam2.ico";
+                engIcon = "icon/english2.ico";
+                string baseDir = AppDomain.CurrentDomain.BaseDirectory;
+                bogoviet.Icon = new Icon(baseDir + vietIcon);
+            }
         }
 
         private void OnApplicationExit(object sender, EventArgs e)
@@ -205,12 +213,12 @@ namespace WindowsFormsApplication1
             NotifyIcon notifyIcon = (NotifyIcon)sender;
             if (goEnglish)
             {
-                notifyIcon.Icon = new Icon(baseDir + "./english.ico");
+                notifyIcon.Icon = new Icon(baseDir + engIcon);
                 notifyIcon.Text = "Bộ Gõ Việt (Tắt)";
             }
             else
             {
-                notifyIcon.Icon = new Icon(baseDir + "./vietnam.ico");
+                notifyIcon.Icon = new Icon(baseDir + vietIcon);
                 notifyIcon.Text = "Bộ Gõ Việt (Bật)";
             }
         }
@@ -235,11 +243,6 @@ namespace WindowsFormsApplication1
             }
         }
 
-        private void buttonGioiThieu_Click(object sender, EventArgs e)
-        {
-            About about = new About();
-            about.ShowDialog();
-        }
 
         private void thoToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -252,5 +255,58 @@ namespace WindowsFormsApplication1
             Debug.WriteLine(kieuGo);
             tv.SetKieuGo(kieuGo);
         }
+
+        private void giớiThiệuToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Show();
+        }
+
+        private void giớiThiệuToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            // buttonGioiThieu_Click(sender, e);
+            if (about == null)
+            {
+                about = new About();
+            }
+            if (!about.Visible)
+            {
+                about.ShowDialog();
+            }
+        }
+        private static bool IsAlreadyRunning()
+        {
+            string strLoc = Assembly.GetExecutingAssembly().Location;
+            FileSystemInfo fileInfo = new FileInfo(strLoc);
+            string sExeName = fileInfo.Name;
+            bool bCreatedNew;
+
+            Mutex mutex = new Mutex(true, "Global\\" + sExeName, out bCreatedNew);
+            if (bCreatedNew)
+            { 
+                mutex.ReleaseMutex();
+            }
+            return !bCreatedNew;
+        }
+
+        private void GotiengVietForm_Load(object sender, EventArgs e)
+        {
+            if (IsAlreadyRunning())
+            {
+                MessageBox.Show("Ứng dụng Gõ Tiếng Việt đang chạy");
+                Application.Exit();
+            }
+        }
+
+        private void buttonDong_Click(object sender, EventArgs e)
+        {
+            Hide();
+        }
+        private bool IsWindows7AndBelow()
+        {
+            return (Environment.OSVersion.Version.Major == 6 &&
+                Environment.OSVersion.Version.Minor <= 1) || 
+                Environment.OSVersion.Version.Major < 6;
+        }
+        
     }
 }

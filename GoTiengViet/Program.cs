@@ -2,7 +2,7 @@
 
 using System.Windows.Forms;
 
-namespace WindowsFormsApplication1
+namespace GotiengVietApplication
 {
     static class Program
     {
@@ -16,7 +16,7 @@ namespace WindowsFormsApplication1
                 SetProcessDPIAware();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new GotiengVietForm());
         }
         [System.Runtime.InteropServices.DllImport("user32.dll")]
         private static extern bool SetProcessDPIAware();
