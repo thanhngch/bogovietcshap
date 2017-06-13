@@ -35,9 +35,9 @@ namespace BoGoViet.TiengViet
         private bool vekepPress = false;
         private bool PrintWW = false;
         private StringBuilder nguyenAmGiuaBienDoi = new StringBuilder();
-        
+        private StringBuilder nguyenAmGiuaBienDoiCoDau = new StringBuilder();
         private bool layNguyenAmGiua = true;
-        private Keys rememberDauCuoiCau = Keys.None;
+        private int rememberDauCuoiCau = -1;
         private bool pressLeftShift = false;
         private bool pressRightShift = false;
         private bool[] upperNguyenAm;
@@ -100,6 +100,7 @@ namespace BoGoViet.TiengViet
                 nguyenAmGiua.Clear();
                 nguyenAmGiuaThuHai.Clear();
                 nguyenAmGiuaBienDoi = new StringBuilder();
+                nguyenAmGiuaBienDoiCoDau = new StringBuilder();
                 upperNguyenAm[0] = false;
                 upperNguyenAm[1] = false;
                 upperNguyenAm[2] = false;
@@ -308,7 +309,6 @@ namespace BoGoViet.TiengViet
                 {
                     sim.Keyboard.KeyDown(VirtualKeyCode.RSHIFT);
                 }
-                vekepPress = false;
                 return;
             }
             
@@ -389,10 +389,9 @@ namespace BoGoViet.TiengViet
                         {
                             sim.Keyboard.KeyPress(VirtualKeyCode.BACK);
                         }
-                        if (rememberDauCuoiCau != Keys.None)
+                        if (rememberDauCuoiCau != -1)
                         {
-                            textSend = ThayDoiDoubleCoDau(textSend, rememberDauCuoiCau);
-                            // rememberDauCuoiCau = Keys.None;
+                            textSend = ThayDoiDoubleCoDau(textSend);
                         }
                         SendText(textSend);
                     }
@@ -428,10 +427,9 @@ namespace BoGoViet.TiengViet
                     {
                         sim.Keyboard.KeyPress(VirtualKeyCode.BACK);
                     }
-                    if (rememberDauCuoiCau != Keys.None)
+                    if (rememberDauCuoiCau != -1)
                     {
-                        textSend = ThayDoiDoubleCoDau(textSend, rememberDauCuoiCau);
-                        rememberDauCuoiCau = Keys.None;
+                        textSend = ThayDoiDoubleCoDau(textSend);
                     }
                     SendText(textSend);
                     vekepPress = false;
@@ -485,7 +483,7 @@ namespace BoGoViet.TiengViet
             else if (dauCuoiCau != Keys.None)
             {
 
-                rememberDauCuoiCau = dauCuoiCau;
+                rememberDauCuoiCau = tvu.CheckDau(dauCuoiCau, isShiftPress());
                 string textSend = "";
                 bool check = KiemTraDauCuoiCau(ref textSend, dauCuoiCau);
                 if (textSend != "")
@@ -566,7 +564,8 @@ namespace BoGoViet.TiengViet
             dauCuoiCau = Keys.None;
             doubleCuoiCau = Keys.None;
             nguyenAmGiuaBienDoi = new StringBuilder();
-            rememberDauCuoiCau = Keys.None;
+            nguyenAmGiuaBienDoiCoDau = new StringBuilder();
+            rememberDauCuoiCau = -1;
             // PrintWW = false;
             upperNguyenAm[0] = false;
             upperNguyenAm[1] = false;
@@ -615,7 +614,7 @@ namespace BoGoViet.TiengViet
                 nguyenAmGiuaBienDoi = new StringBuilder(textSend);
                 result = 0;
             }
-            if (tDoubleInvert.ContainsKey(nguyenAmGiuaBienDoiString))
+            else if (tDoubleInvert.ContainsKey(nguyenAmGiuaBienDoiString))
             {
                 textSend = tDoubleInvert[nguyenAmGiuaBienDoiString];
                 nguyenAmGiuaBienDoi = new StringBuilder(textSend);
@@ -655,14 +654,14 @@ namespace BoGoViet.TiengViet
             {
                 textSend = cVekepInvert[nguyenAmGiuaBienDoiString];
                 nguyenAmGiuaBienDoi = new StringBuilder(textSend);
-                result = true;
+                result = false;
             }
             return result;
         }
 
         private bool KiemTraDauCuoiCau(ref string textSend, Keys key_press)
         {
-            StringBuilder nguyenAmGiuaBienDoiCoDau = new StringBuilder();
+            // StringBuilder nguyenAmGiuaBienDoiCoDau = new StringBuilder();
             string nguyenAmGiuaBienDoiString = nguyenAmGiuaBienDoi.ToString().ToLower();
             bool check = false;
 
@@ -722,12 +721,11 @@ namespace BoGoViet.TiengViet
             string char1 = nguyenAmGiuaBienDoi[0].ToString();
             string char2 = nguyenAmGiuaBienDoi[1].ToString();
 
-            Keys rcc = rememberDauCuoiCau;
-            if (rcc == Keys.None)
+            if (rememberDauCuoiCau == -1)
             {
                 return nguyenAmGiuaBienDoi.ToString();
             }
-            int position = tvu.CheckDau(rememberDauCuoiCau, isShiftPress());
+            int position = rememberDauCuoiCau;
             if (tvu.cCharInvert.ContainsKey(char1)) { 
                 char1 = tvu.cCharInvert[char1];
             }
@@ -737,16 +735,16 @@ namespace BoGoViet.TiengViet
             }
             
             char2 = tvu.cChar[char2][position];
-            // nguyenAmGiuaBienDoi = new StringBuilder(char1 + char2);
+            // nguyenAmGiuaBienDoiCoDau = new StringBuilder(char1 + char2);
             return char1 + char2;
         }
 
         // text: ôi
         // dau: Key.J
         // return ội
-        private string ThayDoiDoubleCoDau(string text, Keys dau)
+        private string ThayDoiDoubleCoDau(string text)
         {
-            int postision_dau = tvu.CheckDau(dau, isShiftPress());
+            int postision_dau = rememberDauCuoiCau;
             StringBuilder result = new StringBuilder(text);
 
             if (tvu.cDauNguyenAm.ContainsKey(text))
