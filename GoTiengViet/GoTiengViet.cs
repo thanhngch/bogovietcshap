@@ -163,7 +163,6 @@ namespace GotiengVietApplication
         
         private void OnKeyUp(object sender, KeyEventArgs e)
         {
-            Debug.WriteLine(e.KeyCode);
             /*
             if (this.special.Checked)
             {
@@ -252,7 +251,6 @@ namespace GotiengVietApplication
         private void selectTypeInput_SelectedIndexChanged(object sender, EventArgs e)
         {
             string kieuGo = (string) this.selectTypeInput.SelectedItem;
-            Debug.WriteLine(kieuGo);
             tv.SetKieuGo(kieuGo);
         }
 

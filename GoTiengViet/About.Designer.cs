@@ -43,7 +43,7 @@
             this.gioithieu.TabIndex = 2;
             this.gioithieu.Text = "Chương trình gõ Tiếng Việt cho Windows sử dụng .Net Framework\nTác giả: Nguyễn Chí" +
     " Thanh\nWebsite: https://bogoviet.com\nLiên hệ: thanhngch91@gmail.com\nPhiên bản: 1" +
-    ".9.0\nNgày cập nhật: 11/06/2017";
+    ".9.0\nNgày cập nhật: 18/06/2017";
             // 
             // About
             // 
