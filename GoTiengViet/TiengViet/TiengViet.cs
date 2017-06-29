@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using WindowsInput.Native;
 using System.Linq;
+using System.Diagnostics;
 
 namespace BoGoViet.TiengViet
 {
@@ -267,25 +268,19 @@ namespace BoGoViet.TiengViet
                 nguyenAmGiuaBienDoi.ToString() == "uơ" || nguyenAmGiuaBienDoi.ToString() == "ưo" ||
                 nguyenAmGiuaBienDoi.ToString() == "oa" || nguyenAmGiuaBienDoi.ToString() == "uy"))
             {
-                for (int i = 0; i < nguyenAmGiua.Count - 3; i++)
-                {
-                    sim.Keyboard.KeyPress(VirtualKeyCode.LEFT);
-                }
+                // Debug.WriteLine("phuAmCuoi: " + phuAmCuoi.Count);
+                
                 if (nguyenAmGiuaBienDoi.ToString() == "uơ" || nguyenAmGiuaBienDoi.ToString() == "ưo")
                 {
                     nguyenAmGiuaBienDoi = new StringBuilder("ươ");
                 }
                 string sendtext = ThayDoiNguyenAmGiua();
-                SendText(sendtext);
+                SendText(sendtext, 1, e.Handled);
                 
                 if (e.KeyCode == Keys.A || e.KeyCode == Keys.O || e.KeyCode == Keys.U
                         || e.KeyCode == Keys.E || e.KeyCode == Keys.I || e.KeyCode == Keys.Y)
                 {
                     nguyenAmGiuaBienDoi = nguyenAmGiuaBienDoi.Append(e.KeyCode.ToString().ToLower()[0]);
-                }
-                for (int i = 0; i < nguyenAmGiua.Count - 3; i++)
-                {
-                    sim.Keyboard.KeyPress(VirtualKeyCode.RIGHT);
                 }
                 return;
             }
@@ -694,9 +689,12 @@ namespace BoGoViet.TiengViet
 
         // type = 0 normal
         // type = 1 text la nguyen am giua
-        public string SendText(string text, int type = 1)
+        public string SendText(string text, int type = 1, bool numberKeys = true)
         {
             int numberKeysPhuAmCuoiCau = phuAmCuoi.Count;
+            if (!numberKeys) {
+                numberKeysPhuAmCuoiCau = phuAmCuoi.Count - 1;
+            }
             if (pressLeftShift)
             {
                 sim.Keyboard.KeyUp(VirtualKeyCode.LSHIFT);
@@ -744,8 +742,6 @@ namespace BoGoViet.TiengViet
                 sim.Keyboard.KeyPress(VirtualKeyCode.BACK);
             }
             sim.Keyboard.TextEntry(textsend);
-            
-            oldsendtext = textsend;
             for (int i = 0; i < numberKeysPhuAmCuoiCau; i++)
             {
                 sim.Keyboard.KeyPress(VirtualKeyCode.RIGHT);
