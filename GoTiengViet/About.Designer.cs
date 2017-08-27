@@ -36,20 +36,20 @@
             // 
             this.gioithieu.BackColor = System.Drawing.SystemColors.Control;
             this.gioithieu.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.gioithieu.Location = new System.Drawing.Point(61, 40);
+            this.gioithieu.Location = new System.Drawing.Point(56, 38);
             this.gioithieu.Name = "gioithieu";
             this.gioithieu.ReadOnly = true;
-            this.gioithieu.Size = new System.Drawing.Size(388, 200);
+            this.gioithieu.Size = new System.Drawing.Size(356, 192);
             this.gioithieu.TabIndex = 2;
             this.gioithieu.Text = "Chương trình gõ Tiếng Việt cho Windows sử dụng .Net Framework\nTác giả: Nguyễn Chí" +
     " Thanh\nWebsite: https://bogoviet.com\nLiên hệ: thanhngch91@gmail.com\nPhiên bản: 1" +
-    ".9.0\nNgày cập nhật: 18/06/2017";
+    ".10.0\nNgày cập nhật: 15/07/2017";
             // 
             // About
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(510, 298);
+            this.ClientSize = new System.Drawing.Size(468, 286);
             this.Controls.Add(this.gioithieu);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "About";

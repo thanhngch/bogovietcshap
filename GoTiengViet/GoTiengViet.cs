@@ -27,8 +27,8 @@ namespace GotiengVietApplication
         private bool isAltPress = false;
         private InputSimulator sim;
         About about = null;
-        private string vietIcon = "icon/vietnam.ico";
-        private string engIcon = "icon/english.ico";
+        private string vietIcon = "icon/vietnam2.ico";
+        private string engIcon = "icon/english2.ico";
         public GotiengVietForm()
         {
             InitializeComponent();
@@ -44,13 +44,18 @@ namespace GotiengVietApplication
             sim = new InputSimulator();
             Application.ApplicationExit += new EventHandler(this.OnApplicationExit);
             MinimizeBox = false;
-            if (IsWindows7AndBelow())
-            {
-                vietIcon = "icon/vietnam2.ico";
-                engIcon = "icon/english2.ico";
-                string baseDir = AppDomain.CurrentDomain.BaseDirectory;
-                bogoviet.Icon = new Icon(baseDir + vietIcon);
+            Debug.WriteLine("Version " + Environment.OSVersion.Version.Major);
+            Debug.WriteLine("Minor " + Environment.OSVersion.Version.Minor);
+            
+            if (IsWindows10()) {
+                
+                vietIcon = "icon/vietnam.ico";
+                engIcon = "icon/english.ico";
+                sửDụngIconHiệnĐạiToolStripMenuItem.Checked = true;
             }
+            string baseDir = AppDomain.CurrentDomain.BaseDirectory;
+            bogoviet.Icon = new Icon(baseDir + vietIcon);
+            
         }
 
         private void OnApplicationExit(object sender, EventArgs e)
@@ -208,17 +213,16 @@ namespace GotiengVietApplication
             goEnglish = !goEnglish;
             tv.Reset();
             SystemSounds.Beep.Play();
-
-            NotifyIcon notifyIcon = (NotifyIcon)sender;
+            
             if (goEnglish)
             {
-                notifyIcon.Icon = new Icon(baseDir + engIcon);
-                notifyIcon.Text = "Bộ Gõ Việt (Tắt)";
+                bogoviet.Icon = new Icon(baseDir + engIcon);
+                bogoviet.Text = "Bộ Gõ Việt (Tắt)";
             }
             else
             {
-                notifyIcon.Icon = new Icon(baseDir + vietIcon);
-                notifyIcon.Text = "Bộ Gõ Việt (Bật)";
+                bogoviet.Icon = new Icon(baseDir + vietIcon);
+                bogoviet.Text = "Bộ Gõ Việt (Bật)";
             }
         }
 
@@ -299,12 +303,40 @@ namespace GotiengVietApplication
         {
             Hide();
         }
-        private bool IsWindows7AndBelow()
+
+        private void sửDụngIconHiệnĐạiToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            return (Environment.OSVersion.Version.Major == 6 &&
-                Environment.OSVersion.Version.Minor <= 1) || 
-                Environment.OSVersion.Version.Major < 6;
+            sửDụngIconHiệnĐạiToolStripMenuItem.Checked = !sửDụngIconHiệnĐạiToolStripMenuItem.Checked;
+            if (sửDụngIconHiệnĐạiToolStripMenuItem.Checked) { 
+                vietIcon = "icon/vietnam.ico";
+                engIcon = "icon/english.ico";
+            } else
+            {
+                vietIcon = "icon/vietnam2.ico";
+                engIcon = "icon/english2.ico";
+            }
+            goEnglish = !goEnglish;
+            ChangeVietEng(sender);
         }
-        
+
+        public bool IsCurrentOSContains(string name)
+        {
+            var reg = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion");
+            string productName = (string)reg.GetValue("ProductName");
+
+            return productName.Contains(name);
+        }
+
+        /// Check if it's Windows 8.1
+        public bool IsWindows8Dot1()
+        {
+            return IsCurrentOSContains("Windows 8.1");
+        }
+
+        /// Check if it's Windows 10
+        public bool IsWindows10()
+        {
+            return IsCurrentOSContains("Windows 10");
+        }
     }
 }
