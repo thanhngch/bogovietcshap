@@ -32,10 +32,11 @@ namespace GotiengVietApplication
         public GotiengVietForm()
         {
             InitializeComponent();
-            this.selectTypeInput.SelectedItem = "Telex";
+            // this.selectTypeInput.SelectedItem = "Telex";
             
             SubscribeGlobal();
             FormClosing += Form1_Closing;
+            Microsoft.Win32.SystemEvents.SessionSwitch += new Microsoft.Win32.SessionSwitchEventHandler(SystemEvents_SessionSwitch);
 
             rk = Registry.CurrentUser.OpenSubKey
             ("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
@@ -44,18 +45,29 @@ namespace GotiengVietApplication
             sim = new InputSimulator();
             Application.ApplicationExit += new EventHandler(this.OnApplicationExit);
             MinimizeBox = false;
-            Debug.WriteLine("Version " + Environment.OSVersion.Version.Major);
-            Debug.WriteLine("Minor " + Environment.OSVersion.Version.Minor);
             
-            if (IsWindows10()) {
-                
+            if (BoGoViet.Properties.Settings.Default.useNewIcon) {
                 vietIcon = "icon/vietnam.ico";
                 engIcon = "icon/english.ico";
                 sửDụngIconHiệnĐạiToolStripMenuItem.Checked = true;
             }
             string baseDir = AppDomain.CurrentDomain.BaseDirectory;
             bogoviet.Icon = new Icon(baseDir + vietIcon);
-            
+            tv.SetKieuGo(BoGoViet.Properties.Settings.Default.bogo);
+            this.selectTypeInput.SelectedItem = BoGoViet.Properties.Settings.Default.bogo;
+        }
+
+        void SystemEvents_SessionSwitch(object sender, Microsoft.Win32.SessionSwitchEventArgs e)
+        {
+            if (e.Reason == SessionSwitchReason.SessionLock)
+            {
+                // I left my desk
+            }
+            else if (e.Reason == SessionSwitchReason.SessionUnlock)
+            {
+                // I returned to my desk
+                // ChangeVietEng();
+            }
         }
 
         private void OnApplicationExit(object sender, EventArgs e)
@@ -134,7 +146,7 @@ namespace GotiengVietApplication
 
             if (isAltPress && e.KeyCode == Keys.Z)
             {
-                ChangeVietEng(this.bogoviet);
+                ChangeVietEng();
                 return;
             }
 
@@ -207,7 +219,7 @@ namespace GotiengVietApplication
 
         }
 
-        private void ChangeVietEng(object sender)
+        private void ChangeVietEng()
         {
             string baseDir = AppDomain.CurrentDomain.BaseDirectory;
             goEnglish = !goEnglish;
@@ -230,7 +242,7 @@ namespace GotiengVietApplication
         {
             if (e.Button == MouseButtons.Left)
             {
-                ChangeVietEng(sender);
+                ChangeVietEng();
             }
         }
 
@@ -256,6 +268,8 @@ namespace GotiengVietApplication
         {
             string kieuGo = (string) this.selectTypeInput.SelectedItem;
             tv.SetKieuGo(kieuGo);
+            BoGoViet.Properties.Settings.Default.bogo = kieuGo;
+            BoGoViet.Properties.Settings.Default.Save();
         }
 
         private void giớiThiệuToolStripMenuItem_Click(object sender, EventArgs e)
@@ -275,19 +289,35 @@ namespace GotiengVietApplication
                 about.ShowDialog();
             }
         }
+
+        public static bool IsProcessOpen(string name)
+        {
+            foreach (Process clsProcess in Process.GetProcesses())
+            {
+                if (clsProcess.ProcessName.Contains(name))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         private static bool IsAlreadyRunning()
         {
             string strLoc = Assembly.GetExecutingAssembly().Location;
             FileSystemInfo fileInfo = new FileInfo(strLoc);
             string sExeName = fileInfo.Name;
-            bool bCreatedNew;
-
-            Mutex mutex = new Mutex(true, "Global\\" + sExeName, out bCreatedNew);
-            if (bCreatedNew)
-            { 
-                mutex.ReleaseMutex();
+            string currentUser = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
+            Process thisProc = Process.GetCurrentProcess();
+            if (IsProcessOpen(sExeName) == true)
+            {
+                if (Process.GetProcessesByName(thisProc.ProcessName).Length > 1)
+                {
+                    return true;
+                }
             }
-            return !bCreatedNew;
+            return false;
         }
 
         private void GotiengVietForm_Load(object sender, EventArgs e)
@@ -307,16 +337,19 @@ namespace GotiengVietApplication
         private void sửDụngIconHiệnĐạiToolStripMenuItem_Click(object sender, EventArgs e)
         {
             sửDụngIconHiệnĐạiToolStripMenuItem.Checked = !sửDụngIconHiệnĐạiToolStripMenuItem.Checked;
-            if (sửDụngIconHiệnĐạiToolStripMenuItem.Checked) { 
+            if (sửDụngIconHiệnĐạiToolStripMenuItem.Checked) {
+                BoGoViet.Properties.Settings.Default.useNewIcon = true;
                 vietIcon = "icon/vietnam.ico";
                 engIcon = "icon/english.ico";
             } else
             {
+                BoGoViet.Properties.Settings.Default.useNewIcon = false;
                 vietIcon = "icon/vietnam2.ico";
                 engIcon = "icon/english2.ico";
             }
+            BoGoViet.Properties.Settings.Default.Save();
             goEnglish = !goEnglish;
-            ChangeVietEng(sender);
+            ChangeVietEng();
         }
 
         public bool IsCurrentOSContains(string name)

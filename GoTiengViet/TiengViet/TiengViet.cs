@@ -105,6 +105,49 @@ namespace BoGoViet.TiengViet
                 upperNguyenAm[1] = false;
                 upperNguyenAm[2] = false;
             }
+            
+            if (e.KeyCode == Keys.Back && !toShiftPress)
+            {
+                
+                if (phuAmCuoi.Count > 0)
+                {
+                    phuAmCuoi.RemoveAt(phuAmCuoi.Count - 1);
+                }
+                else if (nguyenAmGiua.Count > 0)
+                {
+                    nguyenAmGiua.RemoveAt(nguyenAmGiua.Count - 1);
+                    if (nguyenAmGiuaBienDoi.Length > 0) { 
+                        nguyenAmGiuaBienDoi = new StringBuilder(nguyenAmGiuaBienDoi.ToString().Substring(
+                        0, nguyenAmGiuaBienDoi.Length - 1));
+                    }
+                    
+                    if (nguyenAmGiuaBienDoiCoDau.Length > 0)
+                    {
+                        nguyenAmGiuaBienDoiCoDau = new StringBuilder(nguyenAmGiuaBienDoiCoDau.ToString().Substring(
+                            0, nguyenAmGiuaBienDoiCoDau.Length - 1));
+                    }
+                    
+                    vekepPress = false;
+                    dauCuoiCau = Keys.None;
+                    dauPhuAm = Keys.None;
+                    doubleCuoiCau = Keys.None;
+                    PrintWW = false;
+                    layNguyenAmGiua = true;
+                    rememberDauCuoiCau = -1;
+                }
+                else if (phuAmDau.Count > 0)
+                {
+                    phuAmDau.RemoveAt(phuAmDau.Count - 1);
+                    Reset();
+                } else
+                {
+                    Reset();
+                }
+                nguyenAmGiuaThuHai.Clear();
+                layNguyenAmGiua = true;
+                return;
+            }
+            
 
             if (tvu.CheckKeyEndWord(e.KeyCode))
             {
@@ -113,12 +156,15 @@ namespace BoGoViet.TiengViet
             }
             else if (nguyenAmGiuaThuHai.Count > 0)
             {
+                phuAmCuoi.Add(new MyKey(e.KeyCode, isUpperCase()));
                 return;
             }
             else if (!IsAZKey(e.KeyCode))
             {
                 return;
             }
+
+            
             // kiem tra la QU
             else if (phuAmDau.Count == 1 && e.KeyCode == Keys.U && phuAmDau.ToArray()[0] == Keys.Q)
             {
@@ -268,7 +314,6 @@ namespace BoGoViet.TiengViet
                 nguyenAmGiuaBienDoi.ToString() == "uơ" || nguyenAmGiuaBienDoi.ToString() == "ưo" ||
                 nguyenAmGiuaBienDoi.ToString() == "oa" || nguyenAmGiuaBienDoi.ToString() == "uy"))
             {
-                // Debug.WriteLine("phuAmCuoi: " + phuAmCuoi.Count);
                 
                 if (nguyenAmGiuaBienDoi.ToString() == "uơ" || nguyenAmGiuaBienDoi.ToString() == "ưo")
                 {
@@ -284,12 +329,11 @@ namespace BoGoViet.TiengViet
                 }
                 return;
             }
-            
             bool printCurrentPressKey = false;
             if (doubleCuoiCau == Keys.None && dauCuoiCau == Keys.None && vekepPress == false
                 && PrintWW == false && dauPhuAm == Keys.None)
             {
-
+                
                 if (nguyenAmGiuaBienDoi.Length > 0)
                 {
                     if (e.KeyCode == Keys.A || e.KeyCode == Keys.O || e.KeyCode == Keys.U
@@ -426,7 +470,6 @@ namespace BoGoViet.TiengViet
             }
             else if (dauCuoiCau != Keys.None)
             {
-
                 rememberDauCuoiCau = tvu.CheckDau(dauCuoiCau, isShiftPress());
                 string textSend = "";
                 bool check = KiemTraDauCuoiCau(ref textSend, dauCuoiCau);
@@ -442,17 +485,18 @@ namespace BoGoViet.TiengViet
                 }
                 dauCuoiCau = Keys.None;
             }
+            
+            if (printCurrentPressKey)
+            {
+                e.Handled = false;
+
+                // Reset();
+            }
 
             if (e.Handled == false)
             {
                 phuAmCuoi.Add(new MyKey(e.KeyCode, isUpperCase()));
                 nguyenAmGiuaThuHai.Add(Keys.NoName);
-            }
-            
-            if (printCurrentPressKey)
-            {
-                e.Handled = false;
-                Reset();
             }
         }
 
@@ -598,13 +642,14 @@ namespace BoGoViet.TiengViet
             if (tvu.cDauNguyenAm.ContainsKey(nguyenAmGiuaBienDoiString))
             {
                 position = tvu.cDauNguyenAm[nguyenAmGiuaBienDoiString];
-
                 // fix for oa
+                
                 if ((nguyenAmGiuaBienDoiString == "oa" || nguyenAmGiuaBienDoiString == "uy")
                     && phuAmCuoi.Count > 0)
                 {
                     position = 1;
                 }
+                
 
                 string position_char = nguyenAmGiuaBienDoiString[position].ToString();
                 int postision_dau = tvu.CheckDau(key_press, isShiftPress());
@@ -782,7 +827,7 @@ namespace BoGoViet.TiengViet
             Keys[] listControllKey = new Keys[] {
                 Keys.Enter, Keys.LControlKey
                 , Keys.RControlKey, Keys.LWin, Keys.RWin, Keys.RMenu, Keys.LMenu
-                , Keys.LShiftKey, Keys.RShiftKey, Keys.Back, Keys.Tab
+                , Keys.LShiftKey, Keys.RShiftKey, Keys.Tab
 
 
                 , Keys.Left , Keys.Right

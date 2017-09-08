@@ -464,7 +464,7 @@ namespace BoGoViet.TiengViet
             Keys[] listEndKey = new Keys[] {
                 Keys.Enter, Keys.LControlKey
                 , Keys.RControlKey, Keys.LWin, Keys.RWin, Keys.RMenu, Keys.LMenu
-                , Keys.Space, Keys.Back, Keys.Tab
+                , Keys.Space, Keys.Tab
                 , Keys.Oem1 , Keys.Oem2
                 , Keys.Oem3 , Keys.Oem4
                 , Keys.Oem5 , Keys.Oem6
