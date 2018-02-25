@@ -33,10 +33,9 @@ namespace GotiengVietApplication
         {
             InitializeComponent();
             // this.selectTypeInput.SelectedItem = "Telex";
-            
             SubscribeGlobal();
             FormClosing += Form1_Closing;
-            Microsoft.Win32.SystemEvents.SessionSwitch += new Microsoft.Win32.SessionSwitchEventHandler(SystemEvents_SessionSwitch);
+            // SystemEvents.SessionSwitch += new SessionSwitchEventHandler(SystemEvents_SessionSwitch);
 
             rk = Registry.CurrentUser.OpenSubKey
             ("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
@@ -55,8 +54,11 @@ namespace GotiengVietApplication
             bogoviet.Icon = new Icon(baseDir + vietIcon);
             tv.SetKieuGo(BoGoViet.Properties.Settings.Default.bogo);
             this.selectTypeInput.SelectedItem = BoGoViet.Properties.Settings.Default.bogo;
+            Load += GotiengVietForm_Load;
+
         }
 
+        /*
         void SystemEvents_SessionSwitch(object sender, Microsoft.Win32.SessionSwitchEventArgs e)
         {
             if (e.Reason == SessionSwitchReason.SessionLock)
@@ -69,6 +71,7 @@ namespace GotiengVietApplication
                 // ChangeVietEng();
             }
         }
+        */
 
         private void OnApplicationExit(object sender, EventArgs e)
         {
@@ -305,19 +308,23 @@ namespace GotiengVietApplication
 
         private static bool IsAlreadyRunning()
         {
+            /*
             string strLoc = Assembly.GetExecutingAssembly().Location;
             FileSystemInfo fileInfo = new FileInfo(strLoc);
             string sExeName = fileInfo.Name;
             string currentUser = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
             Process thisProc = Process.GetCurrentProcess();
-            if (IsProcessOpen(sExeName) == true)
+            if (Process.GetProcessesByName(thisProc.ProcessName).Length > 1)
             {
-                if (Process.GetProcessesByName(thisProc.ProcessName).Length > 1)
-                {
-                    return true;
-                }
+                return true;
             }
             return false;
+            */
+            string currentUser = Environment.UserName;
+            bool createdNew = true;
+            string processName = Process.GetCurrentProcess().ProcessName;
+            Mutex mutex = new Mutex(true, @"Global\" + currentUser + "-" + processName, out createdNew);
+            return createdNew;
         }
 
         private void GotiengVietForm_Load(object sender, EventArgs e)

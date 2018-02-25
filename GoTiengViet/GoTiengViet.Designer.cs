@@ -35,12 +35,12 @@
             this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.giớiThiệuToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.giớiThiệuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sửDụngIconHiệnĐạiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.thoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.chkStartUp = new System.Windows.Forms.CheckBox();
             this.selectTypeInput = new System.Windows.Forms.ComboBox();
             this.buttonDong = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.sửDụngIconHiệnĐạiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -87,6 +87,14 @@
             this.giớiThiệuToolStripMenuItem.Size = new System.Drawing.Size(288, 34);
             this.giớiThiệuToolStripMenuItem.Text = "Chương trình";
             this.giớiThiệuToolStripMenuItem.Click += new System.EventHandler(this.giớiThiệuToolStripMenuItem_Click);
+            // 
+            // sửDụngIconHiệnĐạiToolStripMenuItem
+            // 
+            this.sửDụngIconHiệnĐạiToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.sửDụngIconHiệnĐạiToolStripMenuItem.Name = "sửDụngIconHiệnĐạiToolStripMenuItem";
+            this.sửDụngIconHiệnĐạiToolStripMenuItem.Size = new System.Drawing.Size(288, 34);
+            this.sửDụngIconHiệnĐạiToolStripMenuItem.Text = "Sử dụng icon hiện đại";
+            this.sửDụngIconHiệnĐạiToolStripMenuItem.Click += new System.EventHandler(this.sửDụngIconHiệnĐạiToolStripMenuItem_Click);
             // 
             // thoToolStripMenuItem
             // 
@@ -140,13 +148,6 @@
             this.label1.Size = new System.Drawing.Size(79, 25);
             this.label1.TabIndex = 11;
             this.label1.Text = "Kiểu gõ";
-            // 
-            // sửDụngIconHiệnĐạiToolStripMenuItem
-            // 
-            this.sửDụngIconHiệnĐạiToolStripMenuItem.Name = "sửDụngIconHiệnĐạiToolStripMenuItem";
-            this.sửDụngIconHiệnĐạiToolStripMenuItem.Size = new System.Drawing.Size(288, 34);
-            this.sửDụngIconHiệnĐạiToolStripMenuItem.Text = "Sử dụng icon hiện đại";
-            this.sửDụngIconHiệnĐạiToolStripMenuItem.Click += new System.EventHandler(this.sửDụngIconHiệnĐạiToolStripMenuItem_Click);
             // 
             // GotiengVietForm
             // 

@@ -89,6 +89,10 @@ namespace BoGoViet.TiengViet
                 Reset();
                 return;
             }
+            if (e.KeyCode == Keys.LShiftKey || e.KeyCode == Keys.RShiftKey)
+            {
+                return;
+            }
             bool toShiftPress = isShiftPress();
             // kiem tra gi
             if (phuAmDau.Count == 1 && phuAmDau.ToArray()[0] == Keys.G &&
@@ -116,7 +120,8 @@ namespace BoGoViet.TiengViet
                 else if (nguyenAmGiua.Count > 0)
                 {
                     nguyenAmGiua.RemoveAt(nguyenAmGiua.Count - 1);
-                    if (nguyenAmGiuaBienDoi.Length > 0) { 
+                    if (nguyenAmGiuaBienDoi.Length > 0) {
+                        upperNguyenAm[nguyenAmGiuaBienDoi.Length - 1] = false;
                         nguyenAmGiuaBienDoi = new StringBuilder(nguyenAmGiuaBienDoi.ToString().Substring(
                         0, nguyenAmGiuaBienDoi.Length - 1));
                     }
@@ -544,6 +549,7 @@ namespace BoGoViet.TiengViet
             dauPhuAm = Keys.None;
             isDoubleD = false;
             isPhuAmDUpper = false;
+            isCtrlAltWinPress = false;
         }
 
         private StringBuilder ConvertKeysToString(List<Keys> s)
