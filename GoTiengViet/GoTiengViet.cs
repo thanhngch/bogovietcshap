@@ -306,7 +306,7 @@ namespace GotiengVietApplication
             return false;
         }
 
-        private static bool IsAlreadyRunning()
+        private static void IsAlreadyRunning()
         {
             /*
             string strLoc = Assembly.GetExecutingAssembly().Location;
@@ -319,21 +319,24 @@ namespace GotiengVietApplication
                 return true;
             }
             return false;
-            */
+            
             string currentUser = Environment.UserName;
             bool createdNew = true;
             string processName = Process.GetCurrentProcess().ProcessName;
             Mutex mutex = new Mutex(true, @"Global\" + currentUser + "-" + processName, out createdNew);
             return createdNew;
+            */
         }
 
         private void GotiengVietForm_Load(object sender, EventArgs e)
         {
+            /*
             if (IsAlreadyRunning())
             {
                 MessageBox.Show("Ứng dụng Gõ Tiếng Việt đang chạy");
                 Application.Exit();
             }
+            */
         }
 
         private void buttonDong_Click(object sender, EventArgs e)
