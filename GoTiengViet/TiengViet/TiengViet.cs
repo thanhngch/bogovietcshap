@@ -97,7 +97,8 @@ namespace BoGoViet.TiengViet
             // kiem tra gi
             if (phuAmDau.Count == 1 && phuAmDau.ToArray()[0] == Keys.G &&
                 nguyenAmGiua.Count == 1 && nguyenAmGiua.ToArray()[0] == Keys.I
-                && tvu.CheckDau(e.KeyCode, isShiftPress()) == -1)
+                && tvu.CheckDau(e.KeyCode, isShiftPress()) == -1
+                && tvu.isNguyenAm(e.KeyCode))
             {
                 // PrintWW = false;
                 phuAmDau.Add(Keys.I);
@@ -177,8 +178,7 @@ namespace BoGoViet.TiengViet
                 layNguyenAmGiua = false;
             }
             else
-            if (e.KeyCode == Keys.A || e.KeyCode == Keys.O || e.KeyCode == Keys.U || 
-                e.KeyCode == Keys.E || e.KeyCode == Keys.I || e.KeyCode == Keys.Y)
+            if (tvu.isNguyenAm(e.KeyCode))
             {
                 layNguyenAmGiua = true;
                 if (tvu.IsTelexDouble(e.KeyCode)) { 
@@ -327,8 +327,7 @@ namespace BoGoViet.TiengViet
                 string sendtext = ThayDoiNguyenAmGiua();
                 SendText(sendtext, 1, e.Handled);
                 
-                if (e.KeyCode == Keys.A || e.KeyCode == Keys.O || e.KeyCode == Keys.U
-                        || e.KeyCode == Keys.E || e.KeyCode == Keys.I || e.KeyCode == Keys.Y)
+                if (tvu.isNguyenAm(e.KeyCode))
                 {
                     nguyenAmGiuaBienDoi = nguyenAmGiuaBienDoi.Append(e.KeyCode.ToString().ToLower()[0]);
                 }
@@ -341,16 +340,14 @@ namespace BoGoViet.TiengViet
                 
                 if (nguyenAmGiuaBienDoi.Length > 0)
                 {
-                    if (e.KeyCode == Keys.A || e.KeyCode == Keys.O || e.KeyCode == Keys.U
-                        || e.KeyCode == Keys.E || e.KeyCode == Keys.I || e.KeyCode == Keys.Y)
+                    if (tvu.isNguyenAm(e.KeyCode))
                     {
                         nguyenAmGiuaBienDoi = nguyenAmGiuaBienDoi.Append(e.KeyCode.ToString().ToLower()[0]);
                     }
                 }
                 else if (nguyenAmGiuaBienDoi.Length == 0 && layNguyenAmGiua)
                 {
-                    if (e.KeyCode == Keys.A || e.KeyCode == Keys.O || e.KeyCode == Keys.U
-                        || e.KeyCode == Keys.E || e.KeyCode == Keys.I || e.KeyCode == Keys.Y)
+                    if (tvu.isNguyenAm(e.KeyCode))
                     {
                         nguyenAmGiuaBienDoi = ConvertKeysToString(nguyenAmGiua);
                     }
@@ -523,6 +520,7 @@ namespace BoGoViet.TiengViet
              || e.KeyCode == Keys.RMenu)
             {
                 isCtrlAltWinPress = false;
+                Reset();
             }
         }
 

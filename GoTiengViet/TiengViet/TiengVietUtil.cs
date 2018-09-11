@@ -528,6 +528,14 @@ namespace BoGoViet.TiengViet
 
             return false;
         }
-
+        public bool isNguyenAm(Keys k)
+        {
+            if (k == Keys.A || k == Keys.O || k == Keys.U ||
+                k == Keys.E || k == Keys.I || k == Keys.Y)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }
