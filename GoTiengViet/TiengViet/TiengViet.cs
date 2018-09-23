@@ -785,7 +785,10 @@ namespace BoGoViet.TiengViet
             {
                 textsend = text;
             }
-            
+
+            sim.Keyboard.TextEntry(char.ConvertFromUtf32(0x200A)); // https://en.wikipedia.org/wiki/Whitespace_character
+            sim.Keyboard.KeyPress(VirtualKeyCode.BACK);
+
             for (int i = 0; i < text.Length; i++)
             {
                 sim.Keyboard.KeyPress(VirtualKeyCode.BACK);
