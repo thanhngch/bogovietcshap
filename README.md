@@ -8,4 +8,4 @@ Tải về ở https://github.com/thanhngch/bogovietcshap/releases
 ## Một số lỗi thường gặp
 
 Các lỗi bị nhảy chữ trong các chương trình như Skype, Google Chrome, Excel thì bạn hãy tắt chức năng auto complete trong
-các chương trình đó đi. Đây là bài viết hướng dẫn cách sửa lỗi bằng cách tắt tính năng auto complete.
+các chương trình đó đi.
