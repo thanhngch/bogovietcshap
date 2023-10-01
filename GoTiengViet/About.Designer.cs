@@ -36,22 +36,24 @@
             // 
             this.gioithieu.BackColor = System.Drawing.SystemColors.Control;
             this.gioithieu.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.gioithieu.Location = new System.Drawing.Point(56, 38);
+            this.gioithieu.Location = new System.Drawing.Point(46, 32);
+            this.gioithieu.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.gioithieu.Name = "gioithieu";
             this.gioithieu.ReadOnly = true;
-            this.gioithieu.Size = new System.Drawing.Size(356, 192);
+            this.gioithieu.Size = new System.Drawing.Size(292, 161);
             this.gioithieu.TabIndex = 2;
             this.gioithieu.Text = "Chương trình gõ Tiếng Việt cho Windows sử dụng .Net Framework\nTác giả: Nguyễn Chí" +
-    " Thanh\nWebsite: https://bogoviet.com\nLiên hệ: thanhngch91@gmail.com\nPhiên bản: 1" +
-    ".12.0\nNgày cập nhật: 08/09/2017";
+    " Thanh\nLiên hệ: thanhngch91@gmail.com\nPhiên bản: 1.15.0\nNgày cập nhật: 01/10/202" +
+    "3";
             // 
             // About
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(468, 286);
+            this.ClientSize = new System.Drawing.Size(383, 238);
             this.Controls.Add(this.gioithieu);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "About";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Giới thiệu";
