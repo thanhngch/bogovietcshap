@@ -149,7 +149,7 @@ namespace BoGoViet.TiengViet
             cVekepOU["ôi"] = "ơi";
             cVekepOU["ua"] = "ưa";
             cVekepOU["ui"] = "ưi";
-            cVekepOU["uo"] = "ươ"; // maybe uơ, eg: thuở, huơ
+            cVekepOU["uo"] = "ươ";
             cVekepOU["uô"] = "ươ";
             cVekepOU["ưo"] = "ươ";
             cVekepOU["uơ"] = "ươ";
