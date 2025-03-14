@@ -13,7 +13,7 @@ namespace GotiengVietApplication
         [STAThread]
         static void Main()
         {
-            if (Environment.OSVersion.Version.Major <= 6)
+            if (Environment.OSVersion.Version.Major >= 6)
                 SetProcessDPIAware();
 
             string currentUser = Environment.UserName;

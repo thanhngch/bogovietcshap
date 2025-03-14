@@ -51,6 +51,7 @@ namespace BoGoViet.TiengViet
         private bool isPhuAmIUpper = false; // am i trong phu am gi
         private Keys dauICuoiCau = Keys.None;
 
+        private bool eHandel = false;
         private TiengvietUtil tvu = new TiengvietUtil();
 
         public TiengViet()
@@ -542,6 +543,8 @@ namespace BoGoViet.TiengViet
                 phuAmCuoi.Add(new MyKey(e.KeyCode, isUpperCase()));
                 // nguyenAmGiuaThuHai.Add(Keys.NoName);
             }
+
+            eHandel = e.Handled;
         }
 
         public void OnKeyUp(ref object sender, ref KeyEventArgs e)
@@ -563,6 +566,12 @@ namespace BoGoViet.TiengViet
             {
                 isCtrlAltWinPress = false;
                 Reset();
+            }
+
+            if (eHandel)
+            {
+                e.Handled = true;
+                eHandel = false;
             }
         }
 
